@@ -96,8 +96,8 @@ plt.hist(poisson_sim, bins=10, normed = True)
 
 # get cdf or pdf from poisson
 stats.poisson.cdf(12.5, mu) #observed value, mu
-stats.poisson.pmf(8, mu)    #observed value, mu
-
+stats.poisson.ppf(.95, mu)  #percentile you want, mu
+stats.poisson.sf(7, mu)     #chances of observing value greater than first arg
 
 
 
@@ -118,9 +118,15 @@ plt.hist(normal_sim, normed = True)
 
 #get cdf or pdf from normal dist
 stats.norm(100,10).cdf(100) #p measuring any value up to and including x
-stats.norm(100,10).pdf(120) #likelihood of measuring particular value
+stats.norm(100,10).ppf(.95) #ppf at percentile
+stats.norm.sf(110,100,10) #observation, mean, sd - output prob of value greater than first arg
 
-'''http://bigdata-madesimple.com/how-to-implement-these-5-powerful-probability-distributions-in-python/'''
+
+
+#T DIST
+
+##################################
+stats.t.cdf(1.5,df=10) #cdf using observation and degrees of freedom of t dist
 
 
 
