@@ -127,9 +127,23 @@ stats.norm.sf(110,100,10) #observation, mean, sd - output prob of value greater 
 
 ##################################
 stats.t.cdf(1.5,df=10) #cdf using observation and degrees of freedom of t dist
+stats.t.ppf(0.95,df=10) #ppf defining cdf and df of t dist
 
 
+#CHI2
 
+##################################
+stats.chi2.cdf(12.0,df=5)
+stats.chi2.ppf(0.95, df=7)
+
+
+#FITTER TO FIND THE PROPER DISTRIBUTION TO USE
+data = stats.norm.rvs(loc=0, scale =1, size = 10000)
+
+from fitter import Fitter
+f = Fitter(data)
+f.fit()
+f.summary()
 
 
 
