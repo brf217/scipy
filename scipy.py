@@ -85,8 +85,8 @@ plt.hist(binom_sim, bins=10, normed = True)
 
 ########################## draw poisson plot with mu as number of times something occurs over time
 mu = 5 
-n = np.arange(0,20) # of tries to plot
-poisson = stats.poisson.pmf(n, mu, loc=0) # use loc to shift the distribution
+n = np.arange(0,20) # points to plot dist at (linspace doesn't work great)
+poisson = stats.poisson.pmf(n, mu, loc=0) # use loc to shift the distribution - optional
 plt.plot(n, poisson, 'o-')
 
 
