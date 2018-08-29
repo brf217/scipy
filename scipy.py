@@ -122,6 +122,12 @@ stats.norm(100,10).ppf(.95) #ppf at percentile
 stats.norm.sf(110,100,10) #observation, mean, sd - output prob of value greater than first arg
 
 
+#confidence interval
+stats.norm.interval(.95, 0,1)
+#can check interval like this
+stats.norm.ppf(.025, 0,1)
+stats.norm.ppf(.975, 0,1)
+
 
 #T DIST
 
