@@ -152,7 +152,7 @@ f.fit()
 f.summary()
 
 
-#ANOVA and PostHoc
+#################################### ANOVA and PostHoc
 f_value, p_value = stats.f_oneway(data1, data2, data3, data4, ...)
 
 #TukeysHSD post hoc (slightly different library)
