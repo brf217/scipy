@@ -152,5 +152,11 @@ f.fit()
 f.summary()
 
 
+#ANOVA and PostHoc
+f_value, p_value = stats.f_oneway(data1, data2, data3, data4, ...)
+
+#TukeysHSD post hoc (slightly different library)
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+print pairwise_tukeyhsd(Data, group_split_dimension)
 
 
