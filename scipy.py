@@ -11,50 +11,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-#check where a number sits in the distribution
-prob = stats.norm.pdf(3, loc=0, scale=1.0)  #loc is mean, scale is sd, First number is check pdf
-
-
-
-#create distribtuion with mean 3.5 and sd2
-dist = stats.norm(loc=3.5, scale =2)
-dist.rvs() #draw a random sample from the dist
-
-
-
-#one sample t test example - dist and value to see if significantly different
-female_doctor_bps = [128, 127, 118, 115, 144, 142, 133, 140, 132, 131, 
-                     111, 132, 149, 122, 139, 119, 136, 129, 126, 128]
-stats.ttest_1samp(female_doctor_bps, 120)
-
-
-
-#two sample difference for independence
-female_doctor_bps = [128, 127, 118, 115, 144, 142, 133, 140, 132, 131, 
-                     111, 132, 149, 122, 139, 119, 136, 129, 126, 128]
-
-male_consultant_bps = [118, 115, 112, 120, 124, 130, 123, 110, 120, 121,
-                      123, 125, 129, 130, 112, 117, 119, 120, 123, 128]
-
-stats.ttest_ind(female_doctor_bps, male_consultant_bps)
-
-
-#paired t test for before and after
-control = [8.0, 7.1, 6.5, 6.7, 7.2, 5.4, 4.7, 8.1, 6.3, 4.8]
-treatment = [9.9, 7.9, 7.6, 6.8, 7.1, 9.9, 10.5, 9.7, 10.9, 8.2]
-
-stats.ttest_rel(control, treatment)
-
-
-
-#ANOVA for two or more samples
-ctrl = [4.17, 5.58, 5.18, 6.11, 4.5, 4.61, 5.17, 4.53, 5.33, 5.14]
-trt1 = [4.81, 4.17, 4.41, 3.59, 5.87, 3.83, 6.03, 4.89, 4.32, 4.69]
-trt2 = [6.31, 5.12, 5.54, 5.5, 5.37, 5.29, 4.92, 6.15, 5.8, 5.26]
-
-stats.f_oneway(ctrl, trt1, trt2)
-
-
 
 #take random choices with probabilities of each from discrete list
 from random import choices
@@ -65,7 +21,8 @@ choices(population, weights)
 
 
 #BINOMIAL DISTRIBUTIONS 
-########################## draw binomial pmf for 10 tries with p success of 0.3. Define distribution
+#################################################################################
+#draw binomial pmf for 10 tries with p success of 0.3. Define distribution
 n=10 
 p=0.3
 k = np.arange(0,20) # of tries to plot
@@ -83,9 +40,9 @@ stats.binom.pmf(3,16,1/6)
 
 
 
-
 #POISSON DISTRIBUTIONS
-########################## draw poisson plot with mu as number of times something occurs over time/dist/etc.
+#############################################################################
+#draw poisson plot with mu as number of times something occurs over time/dist/etc.
 mu = 15 # mean expected occurences per continuous interval/unit
 n = np.arange(0,30) # points to plot dist at (linspace doesn't work great)
 poisson = stats.poisson.pmf(n, mu, loc=0) # use loc to shift the distribution - optional
@@ -106,9 +63,9 @@ stats.poisson.sf(7, mu)     #chances of observing value greater than first arg
 stats.poisson.pmf(4, mu=8)
 
 
-#NORMAL DISTRIBUTIONS
 
-########################## draw poisson plot with mu as number of times something occurs over time
+#NORMAL DISTRIBUTIONS
+##############################################################################
 mean = 0
 sd = 1
 x = np.arange(-5,5, 0.1)
@@ -140,21 +97,53 @@ stats.norm.cdf(2.875, 3.125, .7/np.sqrt(40))
 # no pmf-like function for individual values on curve like Poisson (since p() indiv. value = 0)
 
 
-#T DIST
 
-##################################
+#T DIST df ~n1+n2-2
+#########################################################################
 stats.t.cdf(1.5,df=10) #cdf using observation and degrees of freedom of t dist
 stats.t.ppf(0.95,df=10) #ppf defining cdf and df of t dist
 
 
-#CHI2
+# one sample t test example - dist and value to see if significantly different
+female_doctor_bps = [128, 127, 118, 115, 144, 142, 133, 140, 132, 131, 
+                     111, 132, 149, 122, 139, 119, 136, 129, 126, 128]
+stats.ttest_1samp(female_doctor_bps, 120)
 
-##################################
-stats.chi2.cdf(12.0,df=5)
+
+# students t test for mean difference. 2 tail default
+female_doctor_bps = [128, 127, 118, 115, 144, 142, 133, 140, 132, 131, 
+                     111, 132, 149, 122, 139, 119, 136, 129, 126, 128]
+
+male_consultant_bps = [118, 115, 112, 120, 124, 130, 123, 110, 120, 121,
+                      123, 125, 129, 130, 112, 117, 119, 120, 123, 128]
+
+# 2 tail version by default so /2 for one tail
+two_tail = stats.ttest_ind(female_doctor_bps, male_consultant_bps, equal_var = False).pvalue
+one_tail = two_tail/2
+
+
+# paired t test for before and after
+control = [8.0, 7.1, 6.5, 6.7, 7.2, 5.4, 4.7, 8.1, 6.3, 4.8]
+treatment = [9.9, 7.9, 7.6, 6.8, 7.1, 9.9, 10.5, 9.7, 10.9, 8.2]
+
+stats.ttest_rel(control, treatment)
+
+
+
+#CHI2 comparing expected to observed
+#############################################################################
+
+stats.chisquare(f_obs=[19,31,18,32], f_exp=[25,20,15,40])
+
+stats.chi2.cdf(12,df=1)
 stats.chi2.ppf(0.95, df=7)
+
+stats.chi2.cdf(2, df=1)
+
 
 
 #FITTER TO FIND THE PROPER DISTRIBUTION TO USE
+############################################################################
 data = stats.norm.rvs(loc=0, scale =1, size = 10000)
 
 from fitter import Fitter
@@ -163,13 +152,43 @@ f.fit()
 f.summary()
 
 
-#################################### ANOVA and PostHoc
+
+# ANOVA and PostHoc  / F distribution
+############################################################################
+
+# ANOVA for two or more samples
+ctrl = [4.17, 5.58, 5.18, 6.11, 4.5, 4.61, 5.17, 4.53, 5.33, 5.14]
+trt1 = [4.81, 4.17, 4.41, 3.59, 5.87, 3.83, 6.03, 4.89, 4.32, 4.69]
+trt2 = [6.31, 5.12, 5.54, 5.5, 5.37, 5.29, 4.92, 6.15, 5.8, 5.26]
+
+stats.f_oneway(ctrl, trt1, trt2)
+
+
 f_value, p_value = stats.f_oneway(data1, data2, data3, data4, ...)
 
 #TukeysHSD post hoc (slightly different library)
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 print (pairwise_tukeyhsd(Data, group_split_dimension))
 
+
+
+# simple regression
+############################################################################
+X_price = [12,14,16,18,20]
+y_units = [54,57,49,48,42]
+import statsmodels.api as sm
+X_price = sm.add_constant(X_price)
+reg = sm.OLS(y_units, X_price).fit()
+reg.summary()
+reg.fittedvalues
+reg.resid
+
+X_price = np.array([12,14,16,18,20])
+y_units = np.array([54,57,49,48,42])
+
+import seaborn as sns
+sns.regplot(x=X_price, y=y_units)
+sns.residplot(x=X_price, y=y_units)
 
 
 
