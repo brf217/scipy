@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Aug 27 11:02:11 2018
+Created on Sat Sep  1 21:00:28 2018
 
 @author: feebr01
 """
@@ -64,8 +64,7 @@ choices(population, weights)
 
 
 
-#BINOMIAL DISTRIBUTIONS
-
+#BINOMIAL DISTRIBUTIONS 
 ########################## draw binomial pmf for 10 tries with p success of 0.3. Define distribution
 n=10 
 p=0.3
@@ -79,26 +78,32 @@ binom_sim = stats.binom.rvs(n=10, p=0.3, size = 10000)
 plt.hist(binom_sim, bins=10, normed = True)
 
 
+# figure out prob of success of a specific #successes (3 successes  n=16, psuccess = 1/6)
+stats.binom.pmf(3,16,1/6)
+
+
 
 
 #POISSON DISTRIBUTIONS
-
-########################## draw poisson plot with mu as number of times something occurs over time
-mu = 5 
-n = np.arange(0,20) # points to plot dist at (linspace doesn't work great)
+########################## draw poisson plot with mu as number of times something occurs over time/dist/etc.
+mu = 15 # mean expected occurences per continuous interval/unit
+n = np.arange(0,30) # points to plot dist at (linspace doesn't work great)
 poisson = stats.poisson.pmf(n, mu, loc=0) # use loc to shift the distribution - optional
 plt.plot(n, poisson, 'o-')
 
 
 # sample poisson values from 1k samples and plot the resulting curve
-poisson_sim = stats.poisson.rvs(mu=2, loc=0, size = 10000)
-plt.hist(poisson_sim, bins=10, normed = True)
+poisson_sim = stats.poisson.rvs(mu=10, loc=0, size = 100000)
+plt.hist(poisson_sim, bins=50, normed = True)
+
 
 # get cdf or pdf from poisson
-stats.poisson.cdf(12.5, mu) #observed value, mu
-stats.poisson.ppf(.95, mu)  #percentile you want, mu
+stats.poisson.cdf(12.5, mu) #p of up to observed value, mu
+stats.poisson.ppf(.95, mu)  #percentile you want value for, mu
 stats.poisson.sf(7, mu)     #chances of observing value greater than first arg
 
+# typically see 8 per hour, what is prob of 4
+stats.poisson.pmf(4, mu=8)
 
 
 #NORMAL DISTRIBUTIONS
@@ -118,7 +123,7 @@ plt.hist(normal_sim, normed = True)
 
 #get cdf or pdf from normal dist
 stats.norm(100,10).cdf(100) #p measuring any value up to and including x
-stats.norm(100,10).ppf(.95) #ppf at percentile
+stats.norm(100,10).ppf(.95) # get value at percentile defined (95th)
 stats.norm.sf(110,100,10) #observation, mean, sd - output prob of value greater than first arg
 
 
@@ -127,6 +132,12 @@ stats.norm.interval(.95, 0,1)
 #can check interval like this
 stats.norm.ppf(.025, 0,1)
 stats.norm.ppf(.975, 0,1)
+
+
+# compute based on SE vs. knowing pop SD. Adjust pop SD by sqrt(n)
+stats.norm.cdf(2.875, 3.125, .7/np.sqrt(40))
+
+# no pmf-like function for individual values on curve like Poisson (since p() indiv. value = 0)
 
 
 #T DIST
@@ -157,6 +168,15 @@ f_value, p_value = stats.f_oneway(data1, data2, data3, data4, ...)
 
 #TukeysHSD post hoc (slightly different library)
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
-print pairwise_tukeyhsd(Data, group_split_dimension)
+print (pairwise_tukeyhsd(Data, group_split_dimension))
+
+
+
+
+
+
+
+
+
 
 
