@@ -64,6 +64,17 @@ stats.poisson.pmf(4, mu=8)
 
 
 
+#GAMMA DIST
+##############################################################################
+x = np.linspace(0,10, 50)
+y = stats.gamma.pdf(x, a=2, scale = .7)
+plt.plot(x, y)
+
+# mean = alpha * beta (scale)
+# variance = alpha * beta ^2
+
+
+
 #NORMAL DISTRIBUTIONS
 ##############################################################################
 mean = 0
