@@ -160,7 +160,13 @@ data = stats.norm.rvs(loc=0, scale =1, size = 10000)
 from fitter import Fitter
 f = Fitter(data)
 f.fit()
+
+# get output
 f.summary()
+
+# get params of output you want to see (mean and sd for normal etc.)
+fit.fitted_param['norm']
+
 
 
 
