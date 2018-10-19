@@ -22,17 +22,17 @@ choices(population, weights)
 
 #BINOMIAL DISTRIBUTIONS 
 #################################################################################
-#draw binomial pmf for 10 tries with p success of 0.3. Define distribution
-n=10 
-p=0.3
-k = np.arange(0,20) # of tries to plot
-binomial = stats.binom.pmf(k,n,p)
-plt.plot(binomial, 'o-')
+#draw binomial pmf for n = 10 tries with p success = 0.5. Define distribution
+x = np.arange(0,11) # set up points to plot at
+binom_probs = stats.binom.pmf(x, n = 10, p = .5 )
+plt.bar(x, binom_probs)
 
 
 # sample binomial values from 10k samples and plot the resulting curve
-binom_sim = stats.binom.rvs(n=10, p=0.3, size = 10000)
-plt.hist(binom_sim, bins=10, normed = True)
+binom_sim = stats.binom.rvs(n=10, p=0.5, size = 10000)
+fig, ax = plt.subplots()
+ax.hist(binom_sim, bins = np.arange(11)-.5, normed = True) # align bins properly
+ax.set_xticks(range(10))
 
 
 # figure out prob of success of a specific #successes (3 successes  n=16, psuccess = 1/6)
