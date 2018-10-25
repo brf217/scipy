@@ -189,7 +189,7 @@ print (pairwise_tukeyhsd(Data, group_split_dimension))
 
 
 
-# simple regression
+# simple regression in statsmodels
 ############################################################################
 X_price = [12,14,16,18,20]
 y_units = [54,57,49,48,42]
@@ -206,6 +206,46 @@ y_units = np.array([54,57,49,48,42])
 import seaborn as sns
 sns.regplot(x=X_price, y=y_units)
 sns.residplot(x=X_price, y=y_units)
+
+# Matrix ops and linear algebra notes
+###########################################################################
+m = sympy.Matrix([[1,2,4,5], [2,4,5,4], [4,5,4,2]])
+# solve system of equations reduced row echelon form
+m.rref()
+
+# rank of matrix
+m.rank()
+
+# determinant (square only). 0 = singular / non invertable (linearly dependent cols)
+m_square = sympy.Matrix([[2,7,5], [2,4,5], [4,5,4]])
+m_square.det()
+
+# getting inverse / dividing. Inv * original = identity. Square and full rank only.
+m_square.inv()
+# check that inverse creates identity matrix (not element-wise)
+m_square.inv()*m_square
+
+
+# example 1 - left 3x3 augmented with identity matrix gives inverted left
+m_ex = sympy.Matrix([[1,2,3,1,0,0], [1,3,4,0,1,0], [1,2,5,0,0,1]])
+m_ex.rref()
+
+
+# Regression implementations manual
+#############################################################################
+# linear algebra method on least squares - left inverse
+# coefficent_beta = inverse of (XtX) * X transpose * y
+
+x = m_square = sympy.Matrix([[2,7,5], [2,4,5], [4,5,4]])
+y = sympy.Matrix([11.2, 4.5, 6.7])
+
+
+# get coefficient using inversion #1
+(x.T*x).inv() * x.T*y
+
+# solve coefficients using rref method #2
+mod = x.col_insert(4,y)
+mod.rref()
 
 
 
