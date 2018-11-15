@@ -5,6 +5,7 @@ Created on Wed Nov 14 18:16:13 2018
 
 @author: feebr01
 """
+# Simple implementation of Markov Chain with 3 states and defined starting state
 
 import numpy as np
 import pandas as pd
@@ -41,4 +42,4 @@ states_pct = defaultdict(list)
 # dictionary of percentage of days by state
 for k,v in state_counts.items():
     states_pct[k] = v/tot_states
-    
+
